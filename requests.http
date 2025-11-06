@@ -1,0 +1,81 @@
+
+
+
+GET http://localhost:8080/api/v1/software-engineers
+
+###
+
+POST http://localhost:8080/api/v1/software-engineers
+Content-Type: application/json
+
+{
+  "name": "Bela",
+  "techStack": "Ts"
+}
+
+###
+GET http://localhost:8080/api/v1/software-engineers/1
+
+###
+
+PUT http://localhost:8080/api/v1/software-engineers/1
+Content-Type: application/json
+
+{
+  "name": "Bela",
+  "techStack": "Ts, js, java"
+}
+
+###
+POST http://localhost:8080/people/insertPeople
+Content-Type: application/json
+
+[
+  {
+    "name": "Bela",
+    "age": 20,
+    "gender": "MALE"
+  },
+  {
+    "name": "Jani",
+    "age": 30,
+    "gender": "MALE"
+  }
+
+]
+
+###
+GET http://localhost:8080/people
+
+###
+GET http://localhost:8080/people?sort=DESC
+
+###
+GET http://localhost:8080/people?sort=ASC
+
+###
+PUT http://localhost:8080/people/updatePeople
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Kiskutya",
+  "age": 2,
+  "gender": "MALE"
+}
+
+
+###
+POST http://localhost:8080/books/insertBooks
+Content-Type: application/json
+
+[
+  {
+    "name": "Kiskutya",
+    "author": "Gazda"
+  }
+]
+
+###
+GET http://localhost:8080/books
+
