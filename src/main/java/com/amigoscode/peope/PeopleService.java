@@ -1,6 +1,7 @@
 package com.amigoscode.peope;
 import com.amigoscode.dto.PeopleResponse;
 
+import com.amigoscode.dto.PeopleSummaryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,13 @@ public class PeopleService {
             peopleStream = peopleList.stream().sorted((p1, p2) -> p1.getAge() - p2.getAge());
         }
         return peopleStream.map(peopleDtoMapper).toList();
+    }
+
+
+    public PeopleSummaryDto getPeopleById(Integer id) {
+        People people =  peopleRepository.findById(id).orElse(null);
+        return PeopleMapper.INSTANCE.popleToPeopleSummaryDto(people);
+
     }
     
     public void insertPeople(List<People> peopleList) {

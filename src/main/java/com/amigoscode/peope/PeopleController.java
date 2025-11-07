@@ -2,6 +2,7 @@ package com.amigoscode.peope;
 
 import com.amigoscode.dto.BookSummaryDto;
 import com.amigoscode.dto.PeopleResponse;
+import com.amigoscode.dto.PeopleSummaryDto;
 import com.amigoscode.dto.SoftwareEngineerSummaryDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,10 @@ public class PeopleController {
         return peopleService.getPeople(sortingOrder);
     }
 
+    @GetMapping("/{id}")
+    public PeopleSummaryDto getPeopleById(@PathVariable Integer id) {
+        return peopleService.getPeopleById(id);
+    }
 
 
     @PostMapping("/insertPeople")

@@ -9,6 +9,9 @@ GET http://localhost:8080/people?sort=DESC
 GET http://localhost:8080/people?sort=ASC
 
 ###
+GET http://localhost:8080/people/1
+
+### extra
 
 GET http://localhost:8080/api/v1/software-engineers
 
