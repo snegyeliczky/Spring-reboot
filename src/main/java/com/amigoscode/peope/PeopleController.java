@@ -1,5 +1,8 @@
 package com.amigoscode.peope;
 
+import com.amigoscode.dto.BookSummaryDto;
+import com.amigoscode.dto.PeopleResponse;
+import com.amigoscode.dto.SoftwareEngineerSummaryDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -37,19 +40,17 @@ public class PeopleController {
     }
 
     @GetMapping
-    public List<People> getAllPeople(
+    public List<PeopleResponse> getAllPeople(
             @RequestParam(
                     value = "sort",
                     required = false,
                     defaultValue = "ASC"
             ) SortingOrder sortingOrder
     ) {
-         List<People> peoplelist =  peopleService.getPeople();
-        if (Objects.requireNonNull(sortingOrder) == SortingOrder.DESC) {
-            return peoplelist.stream().sorted((p1, p2) -> p2.getAge() - p1.getAge()).toList();
-        }
-        return peoplelist;
+        return peopleService.getPeople(sortingOrder);
     }
+
+
 
     @PostMapping("/insertPeople")
     public void insertPeople(@RequestBody List<People> people) {

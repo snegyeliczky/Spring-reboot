@@ -1,6 +1,7 @@
 package com.amigoscode.book;
 
 import com.amigoscode.peope.People;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -13,24 +14,23 @@ public class Book {
     private int id;
     private String name;
     private String author;
-//    @ManyToOne(
-//            cascade = CascadeType.MERGE
-//    )
-//    @JoinColumn(
-//            referencedColumnName = "id",
-//            foreignKey = @ForeignKey(
-//                    name = "book_people_id_fk"
-//            ),
-//            nullable = true,
-//            unique = true
-//    )
-//    private People People;
+    @ManyToOne(
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "book_people_id_fk"
+            )
+
+    )
+    @JsonBackReference(value = "people-books")
+    private People people;
 
     public Book() {}
 
-    public Book(String name, int id, String author) {
+    public Book(String name, String author) {
         this.name = name;
-        this.id = id;
         this.author = author;
 
     }
@@ -43,14 +43,6 @@ public class Book {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -59,6 +51,13 @@ public class Book {
         this.author = author;
     }
 
+    public People getPeople() {
+        return people;
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
+    }
 
     @Override
     public boolean equals(Object o) {

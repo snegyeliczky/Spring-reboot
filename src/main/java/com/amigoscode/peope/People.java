@@ -20,13 +20,10 @@ public class People {
     @OneToOne(mappedBy = "people", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private SoftwareEngineer softwareEngineer;
+    @OneToMany(mappedBy = "people", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "people-books")
+    private Set<Book> books;
 
-//    @OneToMany(
-//            mappedBy = "People",
-//            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-//            orphanRemoval = true
-//    )
-//    private Set<Book> books = new HashSet<>();
 
     public People() {
     }
@@ -45,6 +42,13 @@ public class People {
         this.id = id;
     }
 
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     public String getName() {
         return name;
