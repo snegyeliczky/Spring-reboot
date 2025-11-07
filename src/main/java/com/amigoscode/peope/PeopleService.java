@@ -1,8 +1,6 @@
 package com.amigoscode.peope;
-
-import com.amigoscode.dto.BookSummaryDto;
 import com.amigoscode.dto.PeopleResponse;
-import com.amigoscode.dto.SoftwareEngineerSummaryDto;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,24 +10,14 @@ import java.util.stream.Stream;
 @Service
 public class PeopleService {
     private final PeopleRepository peopleRepository;
+    private final PeopleDtoMapper peopleDtoMapper;
 
-    public PeopleService(PeopleRepository peopleRepository) {
+    public PeopleService(PeopleRepository peopleRepository, PeopleDtoMapper peopleDtoMapper) {
         this.peopleRepository = peopleRepository;
+        this.peopleDtoMapper = peopleDtoMapper;
     }
 
-    private static PeopleResponse toDto(People p) {
-        var se = p.getSoftwareEngineer();
-        var seDto = se == null ? null : new SoftwareEngineerSummaryDto(
-                se.getId(), se.getNickName(), se.getTechStack()
-        );
-        var bookDtos = p.getBooks() == null ? List.<BookSummaryDto>of()
-                : p.getBooks().stream()
-                .map(b -> new BookSummaryDto(b.getName(), b.getAuthor()))
-                .toList();
-        return new PeopleResponse(
-                p.getId(), p.getName(), p.getAge(), p.getGender(), seDto, bookDtos
-        );
-    }
+
 
     public List<PeopleResponse> getPeople(SortingOrder sortingOrder) {
         List<People> peopleList = peopleRepository.findAll();
@@ -39,7 +27,7 @@ public class PeopleService {
         } else {
             peopleStream = peopleList.stream().sorted((p1, p2) -> p1.getAge() - p2.getAge());
         }
-        return peopleStream.map(PeopleService::toDto).toList();
+        return peopleStream.map(peopleDtoMapper).toList();
     }
     
     public void insertPeople(List<People> peopleList) {

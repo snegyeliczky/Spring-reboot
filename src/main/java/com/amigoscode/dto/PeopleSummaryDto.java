@@ -4,7 +4,7 @@ import com.amigoscode.peope.Gender;
 
 public record PeopleSummaryDto(
         Integer id,
-        String name,
+        String fullName,
         int age,
         Gender gender
 ) {}
