@@ -2,6 +2,7 @@ package com.amigoscode.peope;
 import com.amigoscode.dto.PeopleResponse;
 
 import com.amigoscode.dto.PeopleSummaryDto;
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,14 +22,16 @@ public class PeopleService {
 
 
     public List<PeopleResponse> getPeople(SortingOrder sortingOrder) {
-        List<People> peopleList = peopleRepository.findAll();
-        Stream<People> peopleStream = Stream.empty();
+        Iterable<People> peopleIterable = peopleRepository.findAll();
+        List<People> people = IterableUtils.toList(peopleIterable);
+        Stream<People> peopleStream;
         if (sortingOrder == SortingOrder.DESC) {
-            peopleStream = peopleList.stream().sorted((p1, p2) -> p2.getAge() - p1.getAge());
+            peopleStream = people.stream().sorted((p1, p2) -> p2.getAge() - p1.getAge());
         } else {
-            peopleStream = peopleList.stream().sorted((p1, p2) -> p1.getAge() - p2.getAge());
+            peopleStream = people.stream().sorted((p1, p2) -> p1.getAge() - p2.getAge());
         }
         return peopleStream.map(peopleDtoMapper).toList();
+
     }
 
 
